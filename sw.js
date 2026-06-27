@@ -1,5 +1,5 @@
 // تغيير الرقم هنا إلى v2 يجبر المتصفح على التحديث
-const cacheName = 'IHSAN-v2'; 
+const cacheName = 'IHSAN-v3'; 
 const assets = [
   './',
   './index.html',
