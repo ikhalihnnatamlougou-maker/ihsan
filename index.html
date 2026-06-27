@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -8,6 +8,12 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
 <style>
 :root {
   --green-dark: #0F5132;
@@ -279,3 +285,2360 @@ body {
   box-shadow: var(--card-shadow);
   display: flex;
   align-items: center;
+  gap: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,81,50,0.15); }
+.stat-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.stat-icon.green { background: #e8f5e9; color: var(--green-dark); }
+.stat-icon.gold { background: #fff8e1; color: #b8860b; }
+.stat-icon.blue { background: #e3f2fd; color: #1565c0; }
+.stat-icon.purple { background: #f3e5f5; color: #6a1b9a; }
+.stat-icon.red { background: #ffebee; color: #c62828; }
+.stat-icon.teal { background: #e0f2f1; color: #00695c; }
+.stat-value { font-size: 24px; font-weight: 800; color: var(--text-dark); }
+.stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+.stat-sub { font-size: 12px; color: var(--green-light); font-weight: 600; margin-top: 2px; }
+
+/* ===== BUTTONS ===== */
+.btn-primary-custom {
+  background: var(--green-dark);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-primary-custom:hover { background: var(--green-light); }
+.btn-primary-custom:active { transform: scale(0.98); }
+.btn-secondary-custom {
+  background: white;
+  color: var(--green-dark);
+  border: 1.5px solid var(--green-dark);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.btn-secondary-custom:hover { background: #edf7ed; }
+.btn-danger-custom {
+  background: white;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-danger-custom:hover { background: #fff0f0; }
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  font-size: 16px;
+}
+.btn-icon:hover { background: var(--bg-main); }
+.btn-icon.edit { color: var(--green-light); }
+.btn-icon.delete { color: var(--danger); }
+
+/* ===== TABLE ===== */
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  background: #f5f9f5;
+  padding: 12px 16px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--border-color);
+}
+.data-table td {
+  padding: 13px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f4f0;
+  color: var(--text-dark);
+  vertical-align: middle;
+}
+.data-table tr:hover td { background: #f8fbf8; }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ===== BADGES ===== */
+.badge-custom {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.badge-success { background: #e8f5e9; color: #2e7d32; }
+.badge-warning { background: #fff8e1; color: #f57f17; }
+.badge-info { background: #e3f2fd; color: #1565c0; }
+.badge-danger { background: #ffebee; color: #c62828; }
+.badge-purple { background: #f3e5f5; color: #6a1b9a; }
+.badge-gold { background: #fff8e1; color: #8d6e00; }
+
+/* ===== FORMS ===== */
+.form-label-custom { font-size: 13px; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; display: block; }
+.form-control-custom {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  background: #fafcfa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  color: var(--text-dark);
+}
+.form-control-custom:focus {
+  outline: none;
+  border-color: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(25,135,84,0.1);
+  background: white;
+}
+.form-control-custom option { font-family: 'Cairo', sans-serif; }
+.form-group { margin-bottom: 16px; }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: white;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: white;
+  border-radius: 18px 18px 0 0;
+}
+.modal-header h5 { font-size: 18px; font-weight: 800; color: var(--green-dark); margin: 0; }
+.modal-close {
+  background: var(--bg-main);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.modal-close:hover { background: #ffebee; color: var(--danger); }
+.modal-body { padding: 24px; }
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-custom {
+  background: #e8f5e9;
+  border-radius: 10px;
+  height: 8px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--green-dark), var(--green-light));
+  transition: width 0.5s ease;
+}
+
+/* ===== PROJECT CARDS ===== */
+.project-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.project-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,81,50,0.15); }
+.project-card-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--green-dark), var(--green-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+}
+.project-card-body { padding: 16px; }
+.project-card-title { font-size: 15px; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
+.project-card-stats { display: flex; gap: 12px; margin-bottom: 10px; }
+.project-stat { font-size: 12px; color: var(--text-muted); }
+.project-stat strong { color: var(--text-dark); }
+
+/* ===== TOAST ===== */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast-msg {
+  background: white;
+  border-radius: 10px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: slideIn 0.3s ease;
+  border-right: 4px solid;
+  min-width: 260px;
+}
+.toast-msg.success { border-color: var(--green-light); color: var(--green-dark); }
+.toast-msg.error { border-color: var(--danger); color: #c0392b; }
+.toast-msg.info { border-color: #1565c0; color: #1565c0; }
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* ===== PAGES ===== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== IMPACT SECTION ===== */
+.impact-number {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--green-dark);
+}
+.impact-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-content { margin-right: 0; }
+  .hamburger { display: flex !important; }
+  .stat-value { font-size: 20px; }
+}
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--green-dark);
+}
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+.sidebar-overlay.show { display: block; }
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state i { font-size: 56px; margin-bottom: 16px; color: var(--border-color); }
+.empty-state h5 { font-size: 16px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+.empty-state p { font-size: 14px; }
+
+/* ===== LOADING ===== */
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--green-light);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 40px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon">🤲</div>
+      <h1>إحسان</h1>
+      <p>منصة إدارة التبرعات والمشاريع الخيرية</p>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+    <input type="text" class="auth-input" id="login-username" placeholder="اسم المستخدم" autocomplete="off">
+    <input type="password" class="auth-input" id="login-password" placeholder="كلمة المرور">
+    <button class="btn-login" id="btn-login" onclick="doLogin()">
+      <span id="login-text">تسجيل الدخول</span>
+    </button>
+    <p style="text-align:center;margin-top:20px;font-size:12px;color:#aaa;">
+      جماعة الخير &bull; نسخة 1.0
+    </p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+  
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-box">🤲</div>
+      <div>
+        <h2>إحسان</h2>
+        <p id="org-name-sidebar">جمعية إحسان الخيرية</p>
+      </div>
+    </div>
+    
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">الرئيسية</div>
+        <a class="nav-item active" onclick="showPage('dashboard')">
+          <i class="bi bi-grid-1x2-fill"></i> لوحة التحكم
+        </a>
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">إدارة البيانات</div>
+        <a class="nav-item" onclick="showPage('donations')">
+          <i class="bi bi-heart-fill"></i> التبرعات
+        </a>
+        <a class="nav-item" onclick="showPage('expenses')">
+          <i class="bi bi-cash-stack"></i> المصروفات
+        </a>
+        <a class="nav-item" onclick="showPage('projects')">
+          <i class="bi bi-kanban-fill"></i> المشاريع
+        </a>
+        <a class="nav-item" onclick="showPage('donors')">
+          <i class="bi bi-people-fill"></i> المتبرعون
+        </a>
+        <a class="nav-item admin-only" onclick="showPage('beneficiaries')">
+          <i class="bi bi-person-heart"></i> المستفيدون
+        </a>
+      </div>
+      
+      <div class="nav-section">
+        <div class="nav-section-title">التقارير والإحصاء</div>
+        <a class="nav-item" onclick="showPage('reports')">
+          <i class="bi bi-bar-chart-fill"></i> التقارير
+        </a>
+        <a class="nav-item" onclick="showPage('impact')">
+          <i class="bi bi-stars"></i> الأثر المحقق
+        </a>
+        <a class="nav-item" onclick="showPage('documents')">
+          <i class="bi bi-folder-fill"></i> الوثائق
+        </a>
+      </div>
+      
+      <div class="nav-section admin-only" id="admin-nav">
+        <div class="nav-section-title">الإدارة</div>
+        <a class="nav-item" onclick="showPage('users')">
+          <i class="bi bi-person-badge-fill"></i> المستخدمون
+        </a>
+        <a class="nav-item" onclick="showPage('settings')">
+          <i class="bi bi-gear-fill"></i> الإعدادات
+        </a>
+      </div>
+    </div>
+    
+    <div class="sidebar-user">
+      <div class="user-avatar" id="user-avatar">م</div>
+      <div class="user-info">
+        <div class="name" id="sidebar-username">المدير</div>
+        <div class="role" id="sidebar-role">مدير النظام</div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()" title="تسجيل الخروج">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="hamburger" onclick="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
+        <h3 id="page-title">لوحة التحكم</h3>
+      </div>
+      <div class="topbar-actions">
+        <div class="search-bar">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="بحث سريع..." id="global-search" oninput="globalSearch(this.value)">
+        </div>
+        <span id="currency-display" style="font-size:13px;color:var(--text-muted);font-weight:600">درهم</span>
+      </div>
+    </div>
+    
+    <div class="page-content">
+      
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="row g-3 mb-4" id="stats-row">
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon green"><i class="bi bi-heart-fill"></i></div>
+              <div>
+                <div class="stat-value" id="stat-total-donations">0</div>
+                <div class="stat-label">إجمالي التبرعات</div>
+                <div class="stat-sub" id="stat-donations-count">0 عملية</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon red"><i class="bi bi-cash-stack"></i></div>
+              <div>
+                <div class="stat-value" id="stat-total-expenses">0</div>
+                <div class="stat-label">إجمالي المصروفات</div>
+                <div class="stat-sub" id="stat-expenses-count">0 عملية</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon gold"><i class="bi bi-wallet2"></i></div>
+              <div>
+                <div class="stat-value" id="stat-balance">0</div>
+                <div class="stat-label">الرصيد الحالي</div>
+                <div class="stat-sub">متاح للصرف</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon blue"><i class="bi bi-people-fill"></i></div>
+              <div>
+                <div class="stat-value" id="stat-donors">0</div>
+                <div class="stat-label">المتبرعون</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon purple"><i class="bi bi-kanban-fill"></i></div>
+              <div>
+                <div class="stat-value" id="stat-projects">0</div>
+                <div class="stat-label">المشاريع النشطة</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="stat-card">
+              <div class="stat-icon teal"><i class="bi bi-person-heart"></i></div>
+              <div>
+                <div class="stat-value" id="stat-beneficiaries">0</div>
+                <div class="stat-label">المستفيدون</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row g-3">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-bar-chart-fill"></i> الحركة المالية الشهرية</h5>
+                <select class="form-control-custom" style="width:auto;padding:6px 12px;font-size:13px" onchange="updateDashboardChart(this.value)">
+                  <option value="6">آخر 6 أشهر</option>
+                  <option value="12">آخر 12 شهر</option>
+                </select>
+              </div>
+              <div class="card-body" style="height:280px">
+                <canvas id="financial-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-pie-chart-fill"></i> توزيع المشاريع</h5>
+              </div>
+              <div class="card-body" style="height:280px">
+                <canvas id="projects-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-clock-history"></i> آخر التبرعات</h5>
+                <button class="btn-secondary-custom" onclick="showPage('donations')">
+                  <i class="bi bi-arrow-left"></i> عرض الكل
+                </button>
+              </div>
+              <div class="card-body" style="padding:0;overflow-x:auto">
+                <table class="data-table" id="recent-donations-table">
+                  <thead>
+                    <tr>
+                      <th>المتبرع</th>
+                      <th>المشروع</th>
+                      <th>المبلغ</th>
+                      <th>طريقة الدفع</th>
+                      <th>التاريخ</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-donations-body">
+                    <tr><td colspan="5"><div class="spinner"></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DONATIONS PAGE -->
+      <div class="page" id="page-donations">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-heart-fill"></i> إدارة التبرعات</h5>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" class="form-control-custom" placeholder="بحث..." style="width:180px;padding:8px 12px" oninput="filterTable('donations-body', this.value)">
+              <button class="btn-primary-custom" onclick="openModal('donation')">
+                <i class="bi bi-plus-lg"></i> تبرع جديد
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>المتبرع</th>
+                  <th>المشروع</th>
+                  <th>المبلغ</th>
+                  <th>طريقة الدفع</th>
+                  <th>التاريخ</th>
+                  <th>ملاحظات</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="donations-body">
+                <tr><td colspan="8"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXPENSES PAGE -->
+      <div class="page" id="page-expenses">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-cash-stack"></i> إدارة المصروفات</h5>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" class="form-control-custom" placeholder="بحث..." style="width:180px;padding:8px 12px" oninput="filterTable('expenses-body', this.value)">
+              <button class="btn-primary-custom" onclick="openModal('expense')">
+                <i class="bi bi-plus-lg"></i> مصروف جديد
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>المشروع</th>
+                  <th>المستفيد</th>
+                  <th>المبلغ</th>
+                  <th>الوصف</th>
+                  <th>التاريخ</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="expenses-body">
+                <tr><td colspan="7"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECTS PAGE -->
+      <div class="page" id="page-projects">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <h4 style="font-weight:800;color:var(--green-dark)">المشاريع الخيرية</h4>
+          <button class="btn-primary-custom admin-only" onclick="openModal('project')">
+            <i class="bi bi-plus-lg"></i> مشروع جديد
+          </button>
+        </div>
+        <div class="row g-3" id="projects-grid">
+          <div class="col-12"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- DONORS PAGE -->
+      <div class="page" id="page-donors">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-people-fill"></i> إدارة المتبرعين</h5>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" class="form-control-custom" placeholder="بحث..." style="width:180px;padding:8px 12px" oninput="filterTable('donors-body', this.value)">
+              <button class="btn-primary-custom" onclick="openModal('donor')">
+                <i class="bi bi-plus-lg"></i> متبرع جديد
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>الاسم الكامل</th>
+                  <th>الهاتف</th>
+                  <th>العنوان</th>
+                  <th>إجمالي التبرعات</th>
+                  <th>ملاحظات</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="donors-body">
+                <tr><td colspan="7"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- BENEFICIARIES PAGE -->
+      <div class="page" id="page-beneficiaries">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-person-heart"></i> إدارة المستفيدين</h5>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <input type="text" class="form-control-custom" placeholder="بحث..." style="width:180px;padding:8px 12px" oninput="filterTable('beneficiaries-body', this.value)">
+              <button class="btn-primary-custom" onclick="openModal('beneficiary')">
+                <i class="bi bi-plus-lg"></i> مستفيد جديد
+              </button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>الاسم</th>
+                  <th>الهاتف</th>
+                  <th>المشروع</th>
+                  <th>نوع المساعدة</th>
+                  <th>القيمة</th>
+                  <th>تاريخ الاستفادة</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="beneficiaries-body">
+                <tr><td colspan="8"><div class="spinner"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORTS PAGE -->
+      <div class="page" id="page-reports">
+        <div class="row g-3 mb-4">
+          <div class="col-md-3 col-6">
+            <button class="btn-primary-custom" style="width:100%;justify-content:center;padding:14px" onclick="generateReport('monthly')">
+              <i class="bi bi-calendar-month"></i> تقرير شهري
+            </button>
+          </div>
+          <div class="col-md-3 col-6">
+            <button class="btn-primary-custom" style="width:100%;justify-content:center;padding:14px;background:var(--green-light)" onclick="generateReport('yearly')">
+              <i class="bi bi-calendar-range"></i> تقرير سنوي
+            </button>
+          </div>
+          <div class="col-md-3 col-6">
+            <button class="btn-secondary-custom" style="width:100%;justify-content:center;padding:13px" onclick="generateReport('project')">
+              <i class="bi bi-kanban"></i> حسب المشروع
+            </button>
+          </div>
+          <div class="col-md-3 col-6">
+            <button class="btn-secondary-custom" style="width:100%;justify-content:center;padding:13px" onclick="generateReport('donor')">
+              <i class="bi bi-person"></i> حسب المتبرع
+            </button>
+          </div>
+        </div>
+        
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-table"></i> ملخص مالي</h5>
+              </div>
+              <div class="card-body">
+                <table class="data-table" id="report-summary-table">
+                  <tbody>
+                    <tr><td>إجمالي التبرعات المجموعة</td><td id="rep-total-donations" style="font-weight:700;color:var(--green-dark)">0</td></tr>
+                    <tr><td>إجمالي المصروفات</td><td id="rep-total-expenses" style="font-weight:700;color:var(--danger)">0</td></tr>
+                    <tr><td>الرصيد المتبقي</td><td id="rep-balance" style="font-weight:700;color:var(--gold)">0</td></tr>
+                    <tr><td>عدد التبرعات</td><td id="rep-count-donations">0</td></tr>
+                    <tr><td>عدد المتبرعين</td><td id="rep-count-donors">0</td></tr>
+                    <tr><td>عدد المشاريع</td><td id="rep-count-projects">0</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-pie-chart"></i> توزيع التبرعات حسب المشاريع</h5>
+              </div>
+              <div class="card-body" style="height:250px">
+                <canvas id="report-projects-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="bi bi-list-columns-reverse"></i> تفاصيل المشاريع</h5>
+                <button class="btn-secondary-custom" onclick="exportPDF()">
+                  <i class="bi bi-file-earmark-pdf"></i> تصدير PDF
+                </button>
+              </div>
+              <div style="overflow-x:auto">
+                <table class="data-table" id="projects-detail-table">
+                  <thead>
+                    <tr>
+                      <th>المشروع</th>
+                      <th>الهدف المالي</th>
+                      <th>المحصل</th>
+                      <th>المصروف</th>
+                      <th>الرصيد</th>
+                      <th>نسبة الإنجاز</th>
+                    </tr>
+                  </thead>
+                  <tbody id="projects-detail-body">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMPACT PAGE -->
+      <div class="page" id="page-impact">
+        <div class="row g-3 mb-4">
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">🧒</div>
+              <div class="impact-number" id="impact-orphans">0</div>
+              <div class="impact-label">يتيم مكفول</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">🕌</div>
+              <div class="impact-number" id="impact-mosques">0</div>
+              <div class="impact-label">مسجد مدعوم</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">💧</div>
+              <div class="impact-number" id="impact-tanks">0</div>
+              <div class="impact-label">صهريج منجز</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">👨‍👩‍👧‍👦</div>
+              <div class="impact-number" id="impact-families">0</div>
+              <div class="impact-label">أسرة مستفيدة</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">🏥</div>
+              <div class="impact-number" id="impact-medical">0</div>
+              <div class="impact-label">مساعدة طبية</div>
+            </div>
+          </div>
+          <div class="col-md-4 col-6">
+            <div class="card text-center" style="padding:24px">
+              <div style="font-size:40px;margin-bottom:8px">❤️</div>
+              <div class="impact-number" id="impact-total-beneficiaries">0</div>
+              <div class="impact-label">إجمالي المستفيدين</div>
+            </div>
+          </div>
+        </div>
+        <div class="row g-3" id="impact-projects-grid"></div>
+      </div>
+
+      <!-- DOCUMENTS PAGE -->
+      <div class="page" id="page-documents">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-folder-fill"></i> إدارة الوثائق والمستندات</h5>
+            <button class="btn-primary-custom" onclick="document.getElementById('file-upload-input').click()">
+              <i class="bi bi-upload"></i> رفع ملف
+            </button>
+            <input type="file" id="file-upload-input" style="display:none" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onchange="uploadDocument(this)">
+          </div>
+          <div class="card-body">
+            <div class="row g-3" id="documents-grid">
+              <div class="col-12">
+                <div class="empty-state">
+                  <i class="bi bi-folder2-open"></i>
+                  <h5>لا توجد وثائق</h5>
+                  <p>ارفع الفواتير والعقود وصور المشاريع هنا</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USERS PAGE (Admin only) -->
+      <div class="page" id="page-users">
+        <div class="card">
+          <div class="card-header">
+            <h5><i class="bi bi-person-badge-fill"></i> إدارة المستخدمين</h5>
+            <button class="btn-primary-custom" onclick="openModal('user')">
+              <i class="bi bi-plus-lg"></i> مستخدم جديد
+            </button>
+          </div>
+          <div style="overflow-x:auto">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>اسم المستخدم</th>
+                  <th>الدور</th>
+                  <th>الحالة</th>
+                  <th>تاريخ الإنشاء</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="users-body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE (Admin only) -->
+      <div class="page" id="page-settings">
+        <div class="row g-3">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header"><h5><i class="bi bi-gear-fill"></i> إعدادات الجمعية</h5></div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="form-label-custom">اسم الجمعية</label>
+                  <input type="text" class="form-control-custom" id="setting-org-name" value="جماعة الخير">
+                </div>
+                <div class="form-group">
+                  <label class="form-label-custom">العملة</label>
+                  <select class="form-control-custom" id="setting-currency">
+                    <option value="درهم" selected>الدرهم المغربي (درهم)</option>
+                    <option value="ريال">الريال السعودي (ريال)</option>
+                    <option value="دينار">الدينار الكويتي (دينار)</option>
+                    <option value="جنيه">الجنيه المصري (جنيه)</option>
+                    <option value="دولار">الدولار الأمريكي ($)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label-custom">إخفاء بيانات المستفيدين عن الأعضاء</label>
+                  <select class="form-control-custom" id="setting-hide-beneficiaries">
+                    <option value="yes">نعم - إخفاء البيانات</option>
+                    <option value="no">لا - إظهار البيانات</option>
+                  </select>
+                </div>
+                <button class="btn-primary-custom" onclick="saveSettings()">
+                  <i class="bi bi-save"></i> حفظ الإعدادات
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header"><h5><i class="bi bi-shield-check"></i> سجل العمليات (Audit Log)</h5></div>
+              <div style="max-height:400px;overflow-y:auto">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>المستخدم</th>
+                      <th>العملية</th>
+                      <th>التاريخ</th>
+                    </tr>
+                  </thead>
+                  <tbody id="audit-log-body">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end page-content -->
+  </div><!-- end main-content -->
+</div><!-- end app -->
+
+<!-- MODALS -->
+
+<!-- Donation Modal -->
+<div class="modal-overlay" id="modal-donation">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="donation-modal-title">إضافة تبرع جديد</h5>
+      <button class="modal-close" onclick="closeModal('donation')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المتبرع <span style="color:red">*</span></label>
+            <select class="form-control-custom" id="don-donor">
+              <option value="">-- اختر متبرعاً --</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المشروع <span style="color:red">*</span></label>
+            <select class="form-control-custom" id="don-project">
+              <option value="">-- اختر مشروعاً --</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المبلغ <span style="color:red">*</span></label>
+            <input type="number" class="form-control-custom" id="don-amount" placeholder="0.00" min="0">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">التاريخ <span style="color:red">*</span></label>
+            <input type="date" class="form-control-custom" id="don-date">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">طريقة الدفع</label>
+            <select class="form-control-custom" id="don-payment">
+              <option value="نقدي">نقدي</option>
+              <option value="تحويل بنكي">تحويل بنكي</option>
+              <option value="شيك">شيك</option>
+              <option value="بطاقة ائتمان">بطاقة ائتمان</option>
+              <option value="محفظة إلكترونية">محفظة إلكترونية</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">صورة الإيصال</label>
+            <input type="file" class="form-control-custom" id="don-receipt" accept="image/*,.pdf">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">ملاحظات</label>
+            <textarea class="form-control-custom" id="don-notes" rows="2" placeholder="ملاحظات إضافية..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('donation')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveDonation()">
+        <i class="bi bi-save"></i> حفظ التبرع
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Expense Modal -->
+<div class="modal-overlay" id="modal-expense">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="expense-modal-title">إضافة مصروف جديد</h5>
+      <button class="modal-close" onclick="closeModal('expense')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المشروع <span style="color:red">*</span></label>
+            <select class="form-control-custom" id="exp-project">
+              <option value="">-- اختر مشروعاً --</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المستفيد</label>
+            <input type="text" class="form-control-custom" id="exp-beneficiary" placeholder="اسم المستفيد">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المبلغ <span style="color:red">*</span></label>
+            <input type="number" class="form-control-custom" id="exp-amount" placeholder="0.00" min="0">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">التاريخ <span style="color:red">*</span></label>
+            <input type="date" class="form-control-custom" id="exp-date">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">الوصف <span style="color:red">*</span></label>
+            <textarea class="form-control-custom" id="exp-description" rows="2" placeholder="وصف المصروف..."></textarea>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">صورة الفاتورة</label>
+            <input type="file" class="form-control-custom" id="exp-invoice" accept="image/*,.pdf">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('expense')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveExpense()">
+        <i class="bi bi-save"></i> حفظ المصروف
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="modal-project">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="project-modal-title">إضافة مشروع جديد</h5>
+      <button class="modal-close" onclick="closeModal('project')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">اسم المشروع <span style="color:red">*</span></label>
+            <input type="text" class="form-control-custom" id="proj-name" placeholder="اسم المشروع">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الهدف المالي</label>
+            <input type="number" class="form-control-custom" id="proj-goal" placeholder="0.00">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الحالة</label>
+            <select class="form-control-custom" id="proj-status">
+              <option value="نشط">نشط</option>
+              <option value="مكتمل">مكتمل</option>
+              <option value="متوقف">متوقف</option>
+              <option value="قيد التنفيذ">قيد التنفيذ</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الأيقونة</label>
+            <input type="text" class="form-control-custom" id="proj-icon" placeholder="مثال: 🕌" maxlength="2">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">الوصف</label>
+            <textarea class="form-control-custom" id="proj-description" rows="3" placeholder="وصف المشروع..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('project')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveProject()">
+        <i class="bi bi-save"></i> حفظ المشروع
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Donor Modal -->
+<div class="modal-overlay" id="modal-donor">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="donor-modal-title">إضافة متبرع جديد</h5>
+      <button class="modal-close" onclick="closeModal('donor')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الاسم الكامل <span style="color:red">*</span></label>
+            <input type="text" class="form-control-custom" id="donor-name" placeholder="الاسم الكامل">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">رقم الهاتف</label>
+            <input type="tel" class="form-control-custom" id="donor-phone" placeholder="0600000000">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">العنوان</label>
+            <input type="text" class="form-control-custom" id="donor-address" placeholder="المدينة، الحي...">
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label class="form-label-custom">ملاحظات</label>
+            <textarea class="form-control-custom" id="donor-notes" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('donor')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveDonor()">
+        <i class="bi bi-save"></i> حفظ المتبرع
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Beneficiary Modal -->
+<div class="modal-overlay" id="modal-beneficiary">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="beneficiary-modal-title">إضافة مستفيد جديد</h5>
+      <button class="modal-close" onclick="closeModal('beneficiary')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الاسم الحقيقي <span style="color:red">*</span></label>
+            <input type="text" class="form-control-custom" id="ben-name" placeholder="الاسم الكامل">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">رقم الهاتف</label>
+            <input type="tel" class="form-control-custom" id="ben-phone" placeholder="0600000000">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">المشروع <span style="color:red">*</span></label>
+            <select class="form-control-custom" id="ben-project">
+              <option value="">-- اختر مشروعاً --</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">نوع المساعدة</label>
+            <select class="form-control-custom" id="ben-type">
+              <option value="كفالة يتيم">كفالة يتيم</option>
+              <option value="مساعدة غذائية">مساعدة غذائية</option>
+              <option value="مساعدة طبية">مساعدة طبية</option>
+              <option value="مساعدة مائية">مساعدة مائية</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">قيمة المساعدة</label>
+            <input type="number" class="form-control-custom" id="ben-value" placeholder="0.00">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">تاريخ الاستفادة</label>
+            <input type="date" class="form-control-custom" id="ben-date">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('beneficiary')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveBeneficiary()">
+        <i class="bi bi-save"></i> حفظ المستفيد
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- User Modal -->
+<div class="modal-overlay" id="modal-user">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h5 id="user-modal-title">إضافة مستخدم جديد</h5>
+      <button class="modal-close" onclick="closeModal('user')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">اسم المستخدم <span style="color:red">*</span></label>
+            <input type="text" class="form-control-custom" id="user-username" placeholder="اسم_المستخدم">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">البريد الإلكتروني (داخلي)</label>
+            <input type="email" class="form-control-custom" id="user-email" placeholder="user@ihsan.org">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">كلمة المرور <span style="color:red">*</span></label>
+            <input type="password" class="form-control-custom" id="user-password" placeholder="••••••••">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-custom">الدور <span style="color:red">*</span></label>
+            <select class="form-control-custom" id="user-role">
+              <option value="admin">مدير</option>
+              <option value="member">عضو</option>
+              <option value="viewer">مشاهد</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-custom" onclick="closeModal('user')">إلغاء</button>
+      <button class="btn-primary-custom" onclick="saveUser()">
+        <i class="bi bi-save"></i> إنشاء المستخدم
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, query, orderBy, where, serverTimestamp, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+// ==================== FIREBASE CONFIG ====================
+// TODO: استبدل هذا بإعدادات Firebase الخاصة بك
+const firebaseConfig = {
+   apiKey: "AIzaSyAZPw3SGlS9z23r5jAoDCYXt0hjou2_yyM",
+  authDomain: "ihsan-1dba5.firebaseapp.com",
+  projectId: "ihsan-1dba5",
+  storageBucket: "ihsan-1dba5.firebasestorage.app",
+  messagingSenderId: "1084543487483",
+  appId: "1:1084543487483:web:dcebf8e1a99a85969a4f5e",
+  measurementId: "G-KM6B6H957E"
+};
+
+// ==================== INIT ====================
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ==================== GLOBAL STATE ====================
+window.appState = {
+  currentUser: null,
+  userRole: 'viewer',
+  username: '',
+  currency: 'درهم',
+  orgName: 'جماعة الخير',
+  hideBeneficiaries: false,
+  donations: [],
+  expenses: [],
+  projects: [],
+  donors: [],
+  beneficiaries: [],
+  users: [],
+  auditLog: [],
+  editingId: null,
+  charts: {}
+};
+
+const DEFAULT_PROJECTS = [
+  { name: 'كفالة الأيتام', icon: '🧒', description: 'كفالة الأطفال الأيتام ودعمهم', goal: 50000, status: 'نشط' },
+  { name: 'بناء مسجد', icon: '🕌', description: 'بناء مسجد جديد للمجتمع', goal: 200000, status: 'نشط' },
+  { name: 'ترميم مسجد', icon: '🏛️', description: 'ترميم وصيانة المساجد القائمة', goal: 80000, status: 'نشط' },
+  { name: 'إصلاح المقبرة', icon: '🌿', description: 'صيانة وتجهيز المقابر', goal: 30000, status: 'نشط' },
+  { name: 'بناء صهريج مائي', icon: '💧', description: 'بناء خزانات مياه للمناطق النائية', goal: 60000, status: 'نشط' },
+  { name: 'تعبئة صهريج مائي', icon: '🚰', description: 'إمداد المناطق المحتاجة بالمياه', goal: 10000, status: 'نشط' },
+  { name: 'حفر بئر', icon: '⛏️', description: 'حفر آبار مياه للمجتمعات المحتاجة', goal: 40000, status: 'نشط' },
+  { name: 'مساعدات غذائية', icon: '🍞', description: 'توفير الغذاء للأسر المحتاجة', goal: 25000, status: 'نشط' },
+  { name: 'مساعدات طبية', icon: '🏥', description: 'دعم العلاج الطبي للمحتاجين', goal: 35000, status: 'نشط' },
+  { name: 'مشروع خاص', icon: '⭐', description: 'مشاريع خاصة متنوعة', goal: 0, status: 'نشط' }
+];
+
+// ==================== AUTH ====================
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        if (data.status === 'inactive') {
+          await signOut(auth);
+          showAuthError('تم تعطيل هذا الحساب. تواصل مع المدير.');
+          return;
+        }
+        appState.currentUser = user;
+        appState.userRole = data.role || 'viewer';
+        appState.username = data.username || user.email;
+        await loadSettings();
+        initApp();
+      } else {
+        await signOut(auth);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
+window.doLogin = async function() {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!username || !password) { showAuthError('أدخل اسم المستخدم وكلمة المرور'); return; }
+  
+  document.getElementById('login-text').textContent = 'جارٍ تسجيل الدخول...';
+  document.getElementById('btn-login').disabled = true;
+  
+  try {
+    const q = query(collection(db, 'users'), where('username', '==', username));
+    const snap = await getDocs(q);
+    if (snap.empty) { showAuthError('اسم المستخدم غير موجود'); resetLogin(); return; }
+    const userData = snap.docs[0].data();
+    await signInWithEmailAndPassword(auth, userData.email, password);
+  } catch (e) {
+    showAuthError('اسم المستخدم أو كلمة المرور غير صحيحة');
+    resetLogin();
+  }
+};
+
+function resetLogin() {
+  document.getElementById('login-text').textContent = 'تسجيل الدخول';
+  document.getElementById('btn-login').disabled = false;
+}
+
+window.doLogout = async function() {
+  if (!confirm('هل تريد تسجيل الخروج؟')) return;
+  await signOut(auth);
+  location.reload();
+};
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+
+// Allow Enter key on login
+document.getElementById('login-password').addEventListener('keypress', e => {
+  if (e.key === 'Enter') window.doLogin();
+});
+
+// ==================== INIT APP ====================
+async function initApp() {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+
+  // Update UI
+  document.getElementById('sidebar-username').textContent = appState.username;
+  document.getElementById('sidebar-role').textContent = getRoleLabel(appState.userRole);
+  document.getElementById('user-avatar').textContent = appState.username.charAt(0).toUpperCase();
+  document.getElementById('org-name-sidebar').textContent = appState.orgName;
+  document.getElementById('currency-display').textContent = appState.currency;
+  document.getElementById('page-title').textContent = 'لوحة التحكم';
+
+  // Role-based UI
+  if (appState.userRole !== 'admin') {
+    document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+  }
+
+  // Check and seed default projects
+  await seedDefaultProjects();
+  
+  // Load all data
+  await loadAllData();
+  
+  // Setup real-time listeners
+  setupRealtimeListeners();
+  
+  // Init dashboard
+  renderDashboard();
+  await logAudit('تسجيل الدخول', `${appState.username} دخل إلى النظام`);
+}
+
+async function seedDefaultProjects() {
+  const snap = await getDocs(collection(db, 'projects'));
+  if (snap.empty) {
+    for (const proj of DEFAULT_PROJECTS) {
+      await addDoc(collection(db, 'projects'), {
+        ...proj,
+        collected: 0,
+        spent: 0,
+        createdAt: serverTimestamp()
+      });
+    }
+  }
+}
+
+// ==================== SETTINGS ====================
+async function loadSettings() {
+  try {
+    const settDoc = await getDoc(doc(db, 'settings', 'main'));
+    if (settDoc.exists()) {
+      const d = settDoc.data();
+      appState.currency = d.currency || 'درهم';
+      appState.orgName = d.orgName || 'جمعية إحسان الخيرية';
+      appState.hideBeneficiaries = d.hideBeneficiaries || false;
+    }
+  } catch(e) {}
+}
+
+window.saveSettings = async function() {
+  const orgName = document.getElementById('setting-org-name').value;
+  const currency = document.getElementById('setting-currency').value;
+  const hide = document.getElementById('setting-hide-beneficiaries').value === 'yes';
+  await setDoc(doc(db, 'settings', 'main'), { orgName, currency, hideBeneficiaries: hide }, { merge: true });
+  appState.orgName = orgName;
+  appState.currency = currency;
+  appState.hideBeneficiaries = hide;
+  document.getElementById('org-name-sidebar').textContent = orgName;
+  document.getElementById('currency-display').textContent = currency;
+  showToast('تم حفظ الإعدادات بنجاح', 'success');
+  await logAudit('إعدادات', 'تم تعديل إعدادات النظام');
+};
+
+// ==================== DATA LOADING ====================
+async function loadAllData() {
+  await Promise.all([
+    loadDonors(), loadProjects(), loadDonations(),
+    loadExpenses(), loadBeneficiaries(), loadUsers(), loadAuditLog()
+  ]);
+}
+
+async function loadDonors() {
+  const snap = await getDocs(query(collection(db, 'donors'), orderBy('createdAt', 'desc')));
+  appState.donors = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderDonors();
+}
+
+async function loadProjects() {
+  const snap = await getDocs(query(collection(db, 'projects'), orderBy('createdAt', 'desc')));
+  appState.projects = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderProjects();
+  populateProjectSelects();
+}
+
+async function loadDonations() {
+  const snap = await getDocs(query(collection(db, 'donations'), orderBy('createdAt', 'desc')));
+  appState.donations = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderDonations();
+}
+
+async function loadExpenses() {
+  const snap = await getDocs(query(collection(db, 'expenses'), orderBy('createdAt', 'desc')));
+  appState.expenses = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderExpenses();
+}
+
+async function loadBeneficiaries() {
+  const snap = await getDocs(query(collection(db, 'beneficiaries'), orderBy('createdAt', 'desc')));
+  appState.beneficiaries = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderBeneficiaries();
+}
+
+async function loadUsers() {
+  const snap = await getDocs(query(collection(db, 'users'), orderBy('createdAt', 'desc')));
+  appState.users = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderUsers();
+}
+
+async function loadAuditLog() {
+  const snap = await getDocs(query(collection(db, 'auditLog'), orderBy('createdAt', 'desc')));
+  appState.auditLog = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAuditLog();
+}
+
+function setupRealtimeListeners() {
+  onSnapshot(collection(db, 'donations'), () => { loadDonations(); renderDashboard(); });
+  onSnapshot(collection(db, 'expenses'), () => { loadExpenses(); renderDashboard(); });
+  onSnapshot(collection(db, 'projects'), () => { loadProjects(); });
+  onSnapshot(collection(db, 'donors'), () => { loadDonors(); });
+}
+
+// ==================== DASHBOARD ====================
+function renderDashboard() {
+  const totalDonations = appState.donations.reduce((s, d) => s + (d.amount || 0), 0);
+  const totalExpenses = appState.expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const balance = totalDonations - totalExpenses;
+  const cur = appState.currency;
+
+  document.getElementById('stat-total-donations').textContent = formatAmount(totalDonations, cur);
+  document.getElementById('stat-total-expenses').textContent = formatAmount(totalExpenses, cur);
+  document.getElementById('stat-balance').textContent = formatAmount(balance, cur);
+  document.getElementById('stat-donations-count').textContent = `${appState.donations.length} عملية`;
+  document.getElementById('stat-expenses-count').textContent = `${appState.expenses.length} عملية`;
+  document.getElementById('stat-donors').textContent = appState.donors.length;
+  document.getElementById('stat-projects').textContent = appState.projects.filter(p => p.status === 'نشط' || p.status === 'قيد التنفيذ').length;
+  document.getElementById('stat-beneficiaries').textContent = appState.beneficiaries.length;
+
+  renderRecentDonations();
+  renderFinancialChart();
+  renderProjectsDonut();
+  renderReports();
+  renderImpact();
+}
+
+function renderRecentDonations() {
+  const tbody = document.getElementById('recent-donations-body');
+  const recent = appState.donations.slice(0, 8);
+  if (!recent.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:30px">لا توجد تبرعات بعد</td></tr>'; return; }
+  tbody.innerHTML = recent.map(d => `
+    <tr>
+      <td><strong>${d.donorName || '—'}</strong></td>
+      <td>${d.projectName || '—'}</td>
+      <td><strong style="color:var(--green-dark)">${formatAmount(d.amount, appState.currency)}</strong></td>
+      <td><span class="badge-custom badge-info">${d.paymentMethod || '—'}</span></td>
+      <td>${formatDate(d.date)}</td>
+    </tr>`).join('');
+}
+
+function renderFinancialChart(months = 6) {
+  const ctx = document.getElementById('financial-chart').getContext('2d');
+  if (appState.charts.financial) appState.charts.financial.destroy();
+  
+  const labels = [];
+  const donData = [];
+  const expData = [];
+  const now = new Date();
+  
+  for (let i = months - 1; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    labels.push(d.toLocaleDateString('ar-MA', { month: 'short', year: '2-digit' }));
+    const mDon = appState.donations.filter(x => {
+      const xd = new Date(x.date);
+      return xd.getMonth() === d.getMonth() && xd.getFullYear() === d.getFullYear();
+    }).reduce((s, x) => s + (x.amount || 0), 0);
+    const mExp = appState.expenses.filter(x => {
+      const xd = new Date(x.date);
+      return xd.getMonth() === d.getMonth() && xd.getFullYear() === d.getFullYear();
+    }).reduce((s, x) => s + (x.amount || 0), 0);
+    donData.push(mDon);
+    expData.push(mExp);
+  }
+  
+  appState.charts.financial = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { label: 'التبرعات', data: donData, backgroundColor: '#198754', borderRadius: 6 },
+        { label: 'المصروفات', data: expData, backgroundColor: '#dc3545', borderRadius: 6 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { family: 'Cairo' } } } },
+      scales: {
+        x: { ticks: { font: { family: 'Cairo' } } },
+        y: { ticks: { font: { family: 'Cairo' }, callback: v => formatAmount(v, appState.currency) } }
+      }
+    }
+  });
+}
+
+function renderProjectsDonut() {
+  const ctx = document.getElementById('projects-chart').getContext('2d');
+  if (appState.charts.projects) appState.charts.projects.destroy();
+  
+  const byProject = {};
+  appState.donations.forEach(d => {
+    byProject[d.projectName] = (byProject[d.projectName] || 0) + (d.amount || 0);
+  });
+  const labels = Object.keys(byProject).slice(0, 8);
+  const data = labels.map(l => byProject[l]);
+  const colors = ['#0F5132','#198754','#D4AF37','#1565c0','#6a1b9a','#00695c','#e65100','#c62828','#37474f'];
+  
+  appState.charts.projects = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 2, borderColor: '#fff' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 }, boxWidth: 12 } } }
+    }
+  });
+}
+
+window.updateDashboardChart = function(months) { renderFinancialChart(parseInt(months)); };
+
+// ==================== REPORTS ====================
+function renderReports() {
+  const totalDon = appState.donations.reduce((s, d) => s + (d.amount || 0), 0);
+  const totalExp = appState.expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const cur = appState.currency;
+  
+  document.getElementById('rep-total-donations').textContent = formatAmount(totalDon, cur);
+  document.getElementById('rep-total-expenses').textContent = formatAmount(totalExp, cur);
+  document.getElementById('rep-balance').textContent = formatAmount(totalDon - totalExp, cur);
+  document.getElementById('rep-count-donations').textContent = appState.donations.length;
+  document.getElementById('rep-count-donors').textContent = appState.donors.length;
+  document.getElementById('rep-count-projects').textContent = appState.projects.length;
+  
+  // Projects detail table
+  const tbody = document.getElementById('projects-detail-body');
+  tbody.innerHTML = appState.projects.map(p => {
+    const collected = appState.donations.filter(d => d.projectId === p.id).reduce((s, d) => s + d.amount, 0);
+    const spent = appState.expenses.filter(e => e.projectId === p.id).reduce((s, e) => s + e.amount, 0);
+    const pct = p.goal ? Math.min(100, Math.round((collected / p.goal) * 100)) : 0;
+    return `<tr>
+      <td><strong>${p.icon || '📌'} ${p.name}</strong></td>
+      <td>${formatAmount(p.goal || 0, cur)}</td>
+      <td style="color:var(--green-dark);font-weight:700">${formatAmount(collected, cur)}</td>
+      <td style="color:var(--danger);font-weight:700">${formatAmount(spent, cur)}</td>
+      <td style="color:var(--gold);font-weight:700">${formatAmount(collected - spent, cur)}</td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="progress-bar-custom" style="flex:1">
+            <div class="progress-fill" style="width:${pct}%"></div>
+          </div>
+          <span style="font-size:12px;font-weight:700;color:var(--green-dark)">${pct}%</span>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Chart
+  const ctx = document.getElementById('report-projects-chart');
+  if (ctx) {
+    const byProj = {};
+    appState.donations.forEach(d => { byProj[d.projectName] = (byProj[d.projectName] || 0) + d.amount; });
+    if (appState.charts.reportProj) appState.charts.reportProj.destroy();
+    appState.charts.reportProj = new Chart(ctx.getContext('2d'), {
+      type: 'pie',
+      data: {
+        labels: Object.keys(byProj),
+        datasets: [{ data: Object.values(byProj), backgroundColor: ['#0F5132','#198754','#D4AF37','#1565c0','#6a1b9a','#00695c','#e65100','#c62828','#37474f','#4a148c'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 10 }, boxWidth: 12 } } } }
+    });
+  }
+}
+
+window.generateReport = function(type) {
+  showToast(`جارٍ إنشاء التقرير...`, 'info');
+  setTimeout(() => exportPDF(), 500);
+};
+
+window.exportPDF = function() {
+  const cur = appState.currency;
+  const totalDon = appState.donations.reduce((s, d) => s + d.amount, 0);
+  const totalExp = appState.expenses.reduce((s, e) => s + e.amount, 0);
+  const win = window.open('', '_blank');
+  win.document.write(`
+    <!DOCTYPE html><html lang="ar" dir="rtl">
+    <head><meta charset="UTF-8"><title>تقرير إحسان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>body{font-family:'Cairo',sans-serif;padding:40px;color:#1a2e1a}h1{color:#0F5132;border-bottom:3px solid #D4AF37;padding-bottom:10px}table{width:100%;border-collapse:collapse;margin:20px 0}th{background:#0F5132;color:white;padding:10px}td{padding:8px;border-bottom:1px solid #eee}tr:nth-child(even){background:#f5f9f5}.total{font-weight:800;color:#0F5132;font-size:18px}</style>
+    </head><body>
+    <h1>🤲 إحسان - التقرير المالي</h1>
+    <p>تاريخ التقرير: ${new Date().toLocaleDateString('ar-MA')}</p>
+    <h3>ملخص مالي</h3>
+    <p class="total">إجمالي التبرعات: ${formatAmount(totalDon, cur)}</p>
+    <p class="total">إجمالي المصروفات: ${formatAmount(totalExp, cur)}</p>
+    <p class="total">الرصيد المتبقي: ${formatAmount(totalDon - totalExp, cur)}</p>
+    <h3>تفاصيل التبرعات</h3>
+    <table><thead><tr><th>المتبرع</th><th>المشروع</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
+    <tbody>${appState.donations.map(d => `<tr><td>${d.donorName}</td><td>${d.projectName}</td><td>${formatAmount(d.amount, cur)}</td><td>${formatDate(d.date)}</td></tr>`).join('')}</tbody></table>
+    <h3>تفاصيل المصروفات</h3>
+    <table><thead><tr><th>المشروع</th><th>الوصف</th><th>المبلغ</th><th>التاريخ</th></tr></thead>
+    <tbody>${appState.expenses.map(e => `<tr><td>${e.projectName}</td><td>${e.description}</td><td>${formatAmount(e.amount, cur)}</td><td>${formatDate(e.date)}</td></tr>`).join('')}</tbody></table>
+    <script>window.print();<\/script></body></html>`);
+  win.document.close();
+};
+
+// ==================== IMPACT ====================
+function renderImpact() {
+  const orphans = appState.beneficiaries.filter(b => b.type === 'كفالة يتيم').length;
+  const medical = appState.beneficiaries.filter(b => b.type === 'مساعدة طبية').length;
+  const mosques = appState.projects.filter(p => p.name.includes('مسجد')).length;
+  const tanks = appState.projects.filter(p => p.name.includes('صهريج') || p.name.includes('بئر')).length;
+  const families = appState.beneficiaries.filter(b => b.type === 'مساعدة غذائية').length;
+  
+  document.getElementById('impact-orphans').textContent = orphans;
+  document.getElementById('impact-mosques').textContent = mosques;
+  document.getElementById('impact-tanks').textContent = tanks;
+  document.getElementById('impact-families').textContent = families;
+  document.getElementById('impact-medical').textContent = medical;
+  document.getElementById('impact-total-beneficiaries').textContent = appState.beneficiaries.length;
+  
+  // Impact project cards
+  const grid = document.getElementById('impact-projects-grid');
+  grid.innerHTML = appState.projects.map(p => {
+    const collected = appState.donations.filter(d => d.projectId === p.id).reduce((s, d) => s + d.amount, 0);
+    const spent = appState.expenses.filter(e => e.projectId === p.id).reduce((s, e) => s + e.amount, 0);
+    const pct = p.goal ? Math.min(100, Math.round((collected / p.goal) * 100)) : 0;
+    return `<div class="col-md-4 col-6">
+      <div class="project-card">
+        <div class="project-card-img">${p.icon || '📌'}</div>
+        <div class="project-card-body">
+          <div class="project-card-title">${p.name}</div>
+          <div class="project-card-stats">
+            <div class="project-stat">محصل: <strong style="color:var(--green-dark)">${formatAmount(collected, appState.currency)}</strong></div>
+            <div class="project-stat">مصروف: <strong style="color:var(--danger)">${formatAmount(spent, appState.currency)}</strong></div>
+          </div>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width:${pct}%"></div>
+          </div>
+          <div style="text-align:left;font-size:12px;font-weight:700;color:var(--green-dark);margin-top:4px">${pct}%</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ==================== RENDER TABLES ====================
+function renderDonors() {
+  const tbody = document.getElementById('donors-body');
+  if (!appState.donors.length) { tbody.innerHTML = emptyRow(7); return; }
+  tbody.innerHTML = appState.donors.map((d, i) => {
+    const total = appState.donations.filter(x => x.donorId === d.id).reduce((s, x) => s + x.amount, 0);
+    const canEdit = appState.userRole !== 'viewer';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td><strong>${d.name}</strong></td>
+      <td>${d.phone || '—'}</td>
+      <td>${d.address || '—'}</td>
+      <td><strong style="color:var(--green-dark)">${formatAmount(total, appState.currency)}</strong></td>
+      <td>${d.notes || '—'}</td>
+      <td>${canEdit ? `<button class="btn-icon edit" onclick="editDonor('${d.id}')"><i class="bi bi-pencil-fill"></i></button>` : ''}
+          ${appState.userRole === 'admin' ? `<button class="btn-icon delete" onclick="deleteRecord('donors','${d.id}','المتبرع')"><i class="bi bi-trash-fill"></i></button>` : ''}</td>
+    </tr>`;
+  }).join('');
+  populateDonorSelects();
+}
+
+function renderDonations() {
+  const tbody = document.getElementById('donations-body');
+  if (!appState.donations.length) { tbody.innerHTML = emptyRow(8); return; }
+  tbody.innerHTML = appState.donations.map((d, i) => {
+    const canEdit = appState.userRole !== 'viewer';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td><strong>${d.donorName || '—'}</strong></td>
+      <td>${d.projectName || '—'}</td>
+      <td><strong style="color:var(--green-dark)">${formatAmount(d.amount, appState.currency)}</strong></td>
+      <td><span class="badge-custom badge-info">${d.paymentMethod || '—'}</span></td>
+      <td>${formatDate(d.date)}</td>
+      <td>${d.notes || '—'}</td>
+      <td>${canEdit ? `<button class="btn-icon edit" onclick="editDonation('${d.id}')"><i class="bi bi-pencil-fill"></i></button>` : ''}
+          ${appState.userRole === 'admin' ? `<button class="btn-icon delete" onclick="deleteRecord('donations','${d.id}','التبرع')"><i class="bi bi-trash-fill"></i></button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderExpenses() {
+  const tbody = document.getElementById('expenses-body');
+  if (!appState.expenses.length) { tbody.innerHTML = emptyRow(7); return; }
+  tbody.innerHTML = appState.expenses.map((e, i) => {
+    const canEdit = appState.userRole !== 'viewer';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>${e.projectName || '—'}</td>
+      <td>${e.beneficiary || '—'}</td>
+      <td><strong style="color:var(--danger)">${formatAmount(e.amount, appState.currency)}</strong></td>
+      <td>${e.description || '—'}</td>
+      <td>${formatDate(e.date)}</td>
+      <td>${canEdit ? `<button class="btn-icon edit" onclick="editExpense('${e.id}')"><i class="bi bi-pencil-fill"></i></button>` : ''}
+          ${appState.userRole === 'admin' ? `<button class="btn-icon delete" onclick="deleteRecord('expenses','${e.id}','المصروف')"><i class="bi bi-trash-fill"></i></button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  if (!appState.projects.length) { grid.innerHTML = '<div class="col-12"><div class="spinner"></div></div>'; return; }
+  grid.innerHTML = appState.projects.map(p => {
+    const collected = appState.donations.filter(d => d.projectId === p.id).reduce((s, d) => s + d.amount, 0);
+    const spent = appState.expenses.filter(e => e.projectId === p.id).reduce((s, e) => s + e.amount, 0);
+    const pct = p.goal ? Math.min(100, Math.round((collected / p.goal) * 100)) : 0;
+    const statusBadge = { 'نشط': 'badge-success', 'مكتمل': 'badge-info', 'متوقف': 'badge-danger', 'قيد التنفيذ': 'badge-warning' };
+    const canEdit = appState.userRole !== 'viewer';
+    return `<div class="col-lg-3 col-md-4 col-6">
+      <div class="project-card">
+        <div class="project-card-img">${p.icon || '📌'}</div>
+        <div class="project-card-body">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+            <div class="project-card-title">${p.name}</div>
+            <span class="badge-custom ${statusBadge[p.status] || 'badge-info'}" style="font-size:10px;white-space:nowrap">${p.status}</span>
+          </div>
+          <div class="project-card-stats">
+            <div class="project-stat">المحصل: <strong style="color:var(--green-dark)">${formatAmount(collected, appState.currency)}</strong></div>
+            <div class="project-stat">المصروف: <strong style="color:var(--danger)">${formatAmount(spent, appState.currency)}</strong></div>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">الرصيد: <strong style="color:var(--gold)">${formatAmount(collected - spent, appState.currency)}</strong></div>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width:${pct}%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+            <span style="font-size:11px;color:var(--text-muted)">الهدف: ${formatAmount(p.goal || 0, appState.currency)}</span>
+            <span style="font-size:12px;font-weight:700;color:var(--green-dark)">${pct}%</span>
+          </div>
+          ${canEdit ? `<div style="margin-top:10px;display:flex;gap:6px">
+            <button class="btn-icon edit" onclick="editProject('${p.id}')" style="flex:1;border:1px solid var(--border-color);border-radius:8px;font-size:13px;padding:6px">
+              <i class="bi bi-pencil-fill"></i> تعديل
+            </button>
+            ${appState.userRole === 'admin' ? `<button class="btn-icon delete" onclick="deleteRecord('projects','${p.id}','المشروع')" style="border:1px solid #ffcdd2;border-radius:8px;font-size:13px;padding:6px">
+              <i class="bi bi-trash-fill"></i>
+            </button>` : ''}
+          </div>` : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderBeneficiaries() {
+  const tbody = document.getElementById('beneficiaries-body');
+  const canView = appState.userRole === 'admin' || !appState.hideBeneficiaries;
+  if (!appState.beneficiaries.length) { tbody.innerHTML = emptyRow(8); return; }
+  tbody.innerHTML = appState.beneficiaries.map((b, i) => {
+    const canEdit = appState.userRole !== 'viewer';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td><strong>${canView ? b.name : '***'}</strong></td>
+      <td>${canView ? (b.phone || '—') : '***'}</td>
+      <td>${b.projectName || '—'}</td>
+      <td><span class="badge-custom badge-purple">${b.type || '—'}</span></td>
+      <td>${formatAmount(b.value || 0, appState.currency)}</td>
+      <td>${formatDate(b.date)}</td>
+      <td>${canEdit ? `<button class="btn-icon edit" onclick="editBeneficiary('${b.id}')"><i class="bi bi-pencil-fill"></i></button>` : ''}
+          ${appState.userRole === 'admin' ? `<button class="btn-icon delete" onclick="deleteRecord('beneficiaries','${b.id}','المستفيد')"><i class="bi bi-trash-fill"></i></button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderUsers() {
+  const tbody = document.getElementById('users-body');
+  if (!appState.users.length) return;
+  tbody.innerHTML = appState.users.map(u => {
+    const isCurrentUser = u.id === appState.currentUser?.uid;
+    const roleBadge = { 'admin': 'badge-danger', 'member': 'badge-warning', 'viewer': 'badge-info' };
+    return `<tr>
+      <td><strong>${u.username}</strong> ${isCurrentUser ? '<span class="badge-custom badge-success" style="font-size:10px">أنت</span>' : ''}</td>
+      <td><span class="badge-custom ${roleBadge[u.role] || 'badge-info'}">${getRoleLabel(u.role)}</span></td>
+      <td><span class="badge-custom ${u.status !== 'inactive' ? 'badge-success' : 'badge-danger'}">${u.status !== 'inactive' ? 'نشط' : 'معطل'}</span></td>
+      <td>${u.createdAt ? new Date(u.createdAt.seconds * 1000).toLocaleDateString('ar-MA') : '—'}</td>
+      <td>${!isCurrentUser ? `<button class="btn-icon delete" onclick="deleteUser('${u.id}')"><i class="bi bi-person-dash-fill"></i></button>` : ''}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderAuditLog() {
+  const tbody = document.getElementById('audit-log-body');
+  if (!appState.auditLog.length) return;
+  tbody.innerHTML = appState.auditLog.slice(0, 50).map(l => `
+    <tr>
+      <td>${l.username || '—'}</td>
+      <td>${l.action}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${l.createdAt ? new Date(l.createdAt.seconds * 1000).toLocaleString('ar-MA') : '—'}</td>
+    </tr>`).join('');
+}
+
+// ==================== SAVE OPERATIONS ====================
+window.saveDonation = async function() {
+  const donorId = document.getElementById('don-donor').value;
+  const projectId = document.getElementById('don-project').value;
+  const amount = parseFloat(document.getElementById('don-amount').value);
+  const date = document.getElementById('don-date').value;
+  const paymentMethod = document.getElementById('don-payment').value;
+  const notes = document.getElementById('don-notes').value;
+  
+  if (!donorId || !projectId || !amount || !date) { showToast('يرجى ملء الحقول المطلوبة', 'error'); return; }
+  
+  const donor = appState.donors.find(d => d.id === donorId);
+  const project = appState.projects.find(p => p.id === projectId);
+  
+  const data = {
+    donorId, donorName: donor?.name || '',
+    projectId, projectName: project?.name || '',
+    amount, date, paymentMethod, notes,
+    createdBy: appState.username,
+    createdAt: serverTimestamp()
+  };
+  
+  try {
+    if (appState.editingId) {
+      await updateDoc(doc(db, 'donations', appState.editingId), data);
+      showToast('تم تعديل التبرع بنجاح', 'success');
+      await logAudit('تعديل تبرع', `${appState.username} عدّل تبرع ${donor?.name}`);
+    } else {
+      await addDoc(collection(db, 'donations'), data);
+      showToast('تم إضافة التبرع بنجاح', 'success');
+      await logAudit('إضافة تبرع', `${appState.username} أضاف تبرع ${donor?.name} - ${amount}`);
+    }
+    closeModal('donation');
+  } catch(e) { showToast('حدث خطأ: ' + e.message, 'error'); }
+};
+
+window.saveExpense = async function() {
+  const projectId = document.getElementById('exp-project').value;
+  const beneficiary = document.getElementById('exp-beneficiary').value;
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  const date = document.getElementById('exp-date').value;
+  const description = document.getElementById('exp-description').value;
+  
+  if (!projectId || !amount || !date || !description) { showToast('يرجى ملء الحقول المطلوبة', 'error'); return; }
+  
+  const project = appState.projects.find(p => p.id === projectId);
+  
+  const data = { projectId, projectName: project?.name || '', beneficiary, amount, date, description, createdBy: appState.username, createdAt: serverTimestamp() };
+  
+  try {
+    if (appState.editingId) {
+      await updateDoc(doc(db, 'expenses', appState.editingId), data);
+      showToast('تم تعديل المصروف بنجاح', 'success');
+    } else {
+      await addDoc(collection(db, 'expenses'), data);
+      showToast('تم إضافة المصروف بنجاح', 'success');
+      await logAudit('إضافة مصروف', `${appState.username} أضاف مصروف ${amount} - ${project?.name}`);
+    }
+    closeModal('expense');
+  } catch(e) { showToast('حدث خطأ: ' + e.message, 'error'); }
+};
+
+window.saveProject = async function() {
+  const name = document.getElementById('proj-name').value.trim();
+  const goal = parseFloat(document.getElementById('proj-goal').value) || 0;
+  const status = document.getElementById('proj-status').value;
+  const icon = document.getElementById('proj-icon').value;
+  const description = document.getElementById('proj-description').value;
+  
+  if (!name) { showToast('يرجى إدخال اسم المشروع', 'error'); return; }
+  
+  const data = { name, goal, status, icon, description, createdAt: serverTimestamp() };
+  
+  try {
+    if (appState.editingId) {
+      await updateDoc(doc(db, 'projects', appState.editingId), { name, goal, status, icon, description });
+      showToast('تم تعديل المشروع بنجاح', 'success');
+    } else {
+      await addDoc(collection(db, 'projects'), { ...data, collected: 0, spent: 0 });
+      showToast('تم إضافة المشروع بنجاح', 'success');
+      await logAudit('إضافة مشروع', `${appState.username} أضاف مشروع: ${name}`);
+    }
+    closeModal('project');
+  } catch(e) { showToast('حدث خطأ: ' + e.message, 'error'); }
+};
+
+window.saveDonor = async function() {
+  const name = document.getElementById('donor-name').value.trim();
+  const phone = document.getElementById('donor-phone').value;
+  const address = document.getElementById('donor-address').value;
+  const notes = document.getElementById('donor-notes').value;
+  
+  if (!name) { showToast('يرجى إدخال اسم المتبرع', 'error'); return; }
+  
+  const data = { name, phone, address, notes, createdAt: serverTimestamp() };
+  
+  try {
+    if (appState.editingId) {
+      await updateDoc(doc(db, 'donors', appState.editingId), { name, phone, address, notes });
+      showToast('تم تعديل المتبرع بنجاح', 'success');
+    } else {
+      await addDoc(collection(db, 'donors'), data);
+      showToast('تم إضافة المتبرع بنجاح', 'success');
+      await logAudit('إضافة متبرع', `${appState.username} أضاف متبرع: ${name}`);
+    }
+    closeModal('donor');
+  } catch(e) { showToast('حدث خطأ: ' + e.message, 'error'); }
+};
+
+window.saveBeneficiary = async function() {
+  const name = document.getElementById('ben-name').value.trim();
+  const phone = document.getElementById('ben-phone').value;
+  const projectId = document.getElementById('ben-project').value;
+  const type = document.getElementById('ben-type').value;
+  const value = parseFloat(document.getElementById('ben-value').value) || 0;
+  const date = document.getElementById('ben-date').value;
+  
+  if (!name || !projectId) { showToast('يرجى ملء الحقول المطلوبة', 'error'); return; }
+  
+  const project = appState.projects.find(p => p.id === projectId);
+  const data = { name, phone, projectId, projectName: project?.name || '', type, value, date, createdAt: serverTimestamp() };
+  
+  try {
+    if (appState.editingId) {
+      await updateDoc(doc(db, 'beneficiaries', appState.editingId), { name, phone, projectId, projectName: project?.name || '', type, value, date });
+      showToast('تم تعديل المستفيد بنجاح', 'success');
+    } else {
+      await addDoc(collection(db, 'beneficiaries'), data);
+      showToast('تم إضافة المستفيد بنجاح', 'success');
+    }
+    closeModal('beneficiary');
+  } catch(e) { showToast('حدث خطأ: ' + e.message, 'error'); }
+};
+
+window.saveUser = async function() {
+  if (appState.userRole !== 'admin') { showToast('ليس لديك صلاحية', 'error'); return; }
+  const username = document.getElementById('user-username').value.trim();
+  const email = document.getElementById('user-email').value.trim();
+  const password = document.getElementById('user-password').value;
+  const role = document.getElementById('user-role').value;
+  
+  if (!username || !email || !password) { showToast('يرجى ملء جميع الحقول', 'error'); return; }
+  
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, 'users', cred.user.uid), { username, email, role, status: 'active', createdAt: serverTimestamp(), createdBy: appState.username });
+    showToast('تم إنشاء المستخدم بنجاح', 'success');
+    await logAudit('إنشاء مستخدم', `${appState.username} أنشأ مستخدم: ${username}`);
+    closeModal('user');
+    loadUsers();
+  } catch(e) { showToast('خطأ: ' + e.message, 'error'); }
+};
+
+window.deleteUser = async function(id) {
+  if (id === appState.currentUser?.uid) { showToast('لا يمكنك حذف حسابك الخاص', 'error'); return; }
+  if (!confirm('هل تريد تعطيل هذا المستخدم؟')) return;
+  await updateDoc(doc(db, 'users', id), { status: 'inactive' });
+  showToast('تم تعطيل المستخدم', 'success');
+  await logAudit('تعطيل مستخدم', `${appState.username} عطّل مستخدماً`);
+  loadUsers();
+};
+
+// ==================== EDIT ====================
+window.editDonor = function(id) {
+  const d = appState.donors.find(x => x.id === id);
+  if (!d) return;
+  appState.editingId = id;
+  document.getElementById('donor-name').value = d.name;
+  document.getElementById('donor-phone').value = d.phone || '';
+  document.getElementById('donor-address').value = d.address || '';
+  document.getElementById('donor-notes').value = d.notes || '';
+  document.getElementById('donor-modal-title').textContent = 'تعديل المتبرع';
+  openModal('donor');
+};
+
+window.editDonation = function(id) {
+  const d = appState.donations.find(x => x.id === id);
+  if (!d) return;
+  appState.editingId = id;
+  document.getElementById('don-donor').value = d.donorId;
+  document.getElementById('don-project').value = d.projectId;
+  document.getElementById('don-amount').value = d.amount;
+  document.getElementById('don-date').value = d.date;
+  document.getElementById('don-payment').value = d.paymentMethod;
+  document.getElementById('don-notes').value = d.notes || '';
+  document.getElementById('donation-modal-title').textContent = 'تعديل التبرع';
+  openModal('donation');
+};
+
+window.editExpense = function(id) {
+  const e = appState.expenses.find(x => x.id === id);
+  if (!e) return;
+  appState.editingId = id;
+  document.getElementById('exp-project').value = e.projectId;
+  document.getElementById('exp-beneficiary').value = e.beneficiary || '';
+  document.getElementById('exp-amount').value = e.amount;
+  document.getElementById('exp-date').value = e.date;
+  document.getElementById('exp-description').value = e.description;
+  document.getElementById('expense-modal-title').textContent = 'تعديل المصروف';
+  openModal('expense');
+};
+
+window.editProject = function(id) {
+  const p = appState.projects.find(x => x.id === id);
+  if (!p) return;
+  appState.editingId = id;
+  document.getElementById('proj-name').value = p.name;
+  document.getElementById('proj-goal').value = p.goal || '';
+  document.getElementById('proj-status').value = p.status;
+  document.getElementById('proj-icon').value = p.icon || '';
+  document.getElementById('proj-description').value = p.description || '';
+  document.getElementById('project-modal-title').textContent = 'تعديل المشروع';
+  openModal('project');
+};
+
+window.editBeneficiary = function(id) {
+  const b = appState.beneficiaries.find(x => x.id === id);
+  if (!b) return;
+  appState.editingId = id;
+  document.getElementById('ben-name').value = b.name;
+  document.getElementById('ben-phone').value = b.phone || '';
+  document.getElementById('ben-project').value = b.projectId;
+  document.getElementById('ben-type').value = b.type;
+  document.getElementById('ben-value').value = b.value || '';
+  document.getElementById('ben-date').value = b.date || '';
+  document.getElementById('beneficiary-modal-title').textContent = 'تعديل المستفيد';
+  openModal('beneficiary');
+};
+
+// ==================== DELETE ====================
+window.deleteRecord = async function(col, id, label) {
+  if (appState.userRole !== 'admin') { showToast('ليس لديك صلاحية الحذف', 'error'); return; }
+  if (!confirm(`هل تريد حذف ${label}؟ لا يمكن التراجع عن هذه العملية.`)) return;
+  await deleteDoc(doc(db, col, id));
+  showToast(`تم حذف ${label} بنجاح`, 'success');
+  await logAudit('حذف', `${appState.username} حذف ${label} من ${col}`);
+};
+
+// ==================== SEARCH ====================
+window.globalSearch = function(term) {
+  if (!term) return;
+  ['donations-body', 'expenses-body', 'donors-body', 'beneficiaries-body'].forEach(id => {
+    filterTable(id, term);
+  });
+};
+
+window.filterTable = function(tbodyId, term) {
+  const tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  const rows = tbody.getElementsByTagName('tr');
+  term = term.toLowerCase();
+  Array.from(rows).forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
+  });
+};
+
+// ==================== DOCUMENTS ====================
+window.uploadDocument = function(input) {
+  if (!input.files.length) return;
+  const file = input.files[0];
+  showToast(`تم رفع الملف: ${file.name}`, 'success');
+  const grid = document.getElementById('documents-grid');
+  const ext = file.name.split('.').pop().toUpperCase();
+  const icon = { PDF: '📄', JPG: '🖼️', JPEG: '🖼️', PNG: '🖼️', DOC: '📝', DOCX: '📝' }[ext] || '📎';
+  const card = document.createElement('div');
+  card.className = 'col-md-3 col-6';
+  card.innerHTML = `<div class="card text-center" style="padding:20px;cursor:pointer">
+    <div style="font-size:40px;margin-bottom:8px">${icon}</div>
+    <div style="font-size:13px;font-weight:700;word-break:break-all">${file.name}</div>
+    <div style="font-size:11px;color:var(--text-muted)">${(file.size/1024).toFixed(1)} KB</div>
+    <div style="margin-top:10px">
+      <span class="badge-custom badge-info">${ext}</span>
+    </div>
+  </div>`;
+  if (grid.querySelector('.empty-state')) grid.innerHTML = '';
+  grid.appendChild(card);
+  input.value = '';
+};
+
+// ==================== HELPERS ====================
+function populateProjectSelects() {
+  const selects = ['don-project', 'exp-project', 'ben-project'];
+  selects.forEach(id => {
+    const sel = document.getElementById(id);
+    if (!sel) return;
+    const val = sel.value;
+    sel.innerHTML = '<option value="">-- اختر مشروعاً --</option>' +
+      appState.projects.map(p => `<option value="${p.id}">${p.icon || ''} ${p.name}</option>`).join('');
+    if (val) sel.value = val;
+  });
+}
+
+function populateDonorSelects() {
+  const sel = document.getElementById('don-donor');
+  if (!sel) return;
+  const val = sel.value;
+  sel.innerHTML = '<option value="">-- اختر متبرعاً --</option>' +
+    appState.donors.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+  if (val) sel.value = val;
+}
+
+function formatAmount(amount, currency) {
+  return `${(amount || 0).toLocaleString('ar-MA', { maximumFractionDigits: 2 })} ${currency || 'درهم'}`;
+}
+
+function formatDate(date) {
+  if (!date) return '—';
+  return new Date(date).toLocaleDateString('ar-MA');
+}
+
+function getRoleLabel(role) {
+  return { admin: 'مدير النظام', member: 'عضو', viewer: 'مشاهد' }[role] || role;
+}
+
+function emptyRow(cols) {
+  return `<tr><td colspan="${cols}"><div class="empty-state"><i class="bi bi-inbox"></i><h5>لا توجد بيانات</h5><p>لم يتم إضافة أي سجلات بعد</p></div></td></tr>`;
+}
+
+async function logAudit(action, detail) {
+  try {
+    await addDoc(collection(db, 'auditLog'), {
+      username: appState.username,
+      action: `${action} - ${detail}`,
+      createdAt: serverTimestamp()
+    });
+  } catch(e) {}
+}
+
+// ==================== MODAL HELPERS ====================
+window.openModal = function(type) {
+  if (type !== (appState.currentModalType)) {
+    appState.editingId = null;
+    clearModalForms(type);
+  }
+  appState.currentModalType = type;
+  const today = new Date().toISOString().split('T')[0];
+  if (type === 'donation') { document.getElementById('don-date').value = today; document.getElementById('donation-modal-title').textContent = appState.editingId ? 'تعديل التبرع' : 'إضافة تبرع جديد'; }
+  if (type === 'expense') { document.getElementById('exp-date').value = today; document.getElementById('expense-modal-title').textContent = appState.editingId ? 'تعديل المصروف' : 'إضافة مصروف جديد'; }
+  if (type === 'beneficiary') { document.getElementById('ben-date').value = today; }
+  document.getElementById(`modal-${type}`).classList.add('show');
+};
+
+window.closeModal = function(type) {
+  document.getElementById(`modal-${type}`).classList.remove('show');
+  appState.editingId = null;
+};
+
+function clearModalForms(type) {
+  const fields = {
+    donation: ['don-donor','don-project','don-amount','don-notes'],
+    expense: ['exp-project','exp-beneficiary','exp-amount','exp-description'],
+    project: ['proj-name','proj-goal','proj-icon','proj-description'],
+    donor: ['donor-name','donor-phone','donor-address','donor-notes'],
+    beneficiary: ['ben-name','ben-phone','ben-project','ben-value'],
+    user: ['user-username','user-email','user-password']
+  };
+  (fields[type] || []).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      const id = this.id.replace('modal-', '');
+      closeModal(id);
+    }
+  });
+});
+
+// ==================== NAVIGATION ====================
+window.showPage = function(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(`page-${page}`).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event?.currentTarget?.classList.add('active');
+  const titles = {
+    dashboard: 'لوحة التحكم', donations: 'التبرعات', expenses: 'المصروفات',
+    projects: 'المشاريع', donors: 'المتبرعون', beneficiaries: 'المستفيدون',
+    reports: 'التقارير', impact: 'الأثر المحقق', documents: 'الوثائق',
+    users: 'المستخدمون', settings: 'الإعدادات'
+  };
+  document.getElementById('page-title').textContent = titles[page] || page;
+  if (page === 'dashboard') renderDashboard();
+  if (page === 'reports') renderReports();
+  if (page === 'impact') renderImpact();
+  if (page === 'settings') {
+    loadAuditLog();
+    document.getElementById('setting-org-name').value = appState.orgName;
+    document.getElementById('setting-currency').value = appState.currency;
+  }
+  if (window.innerWidth < 768) toggleSidebar();
+};
+
+window.toggleSidebar = function() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('show');
+};
+
+// ==================== TOAST ====================
+window.showToast = function(msg, type = 'success') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  toast.className = `toast-msg ${type}`;
+  toast.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+};
+
+// ==================== BOOTSTRAP COMPAT ====================
+// Init Bootstrap tooltips if needed
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('login-username').focus();
+});
+</script>
+</body>
+</html>
